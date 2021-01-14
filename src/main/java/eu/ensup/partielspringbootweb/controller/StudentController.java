@@ -48,6 +48,8 @@ public class StudentController {
 	
 	@GetMapping(value="/detail/{id}")
 	public Student getStudentById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+		System.out.println("+++++++++++++++ getDetail +++++++++++++");
+
 		
 		return studentService.getStudent(id);
 	}

@@ -1,7 +1,9 @@
 package eu.ensup.partielspringbootweb.entities;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -11,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
@@ -22,9 +25,7 @@ import javax.persistence.NamedEntityGraph;
  *
  */
 @Entity
-@NamedEntityGraph(name = "Student.courses",
-attributeNodes = @NamedAttributeNode("courses")
-)
+
 @DiscriminatorValue("STUDENT")
 public class Student extends Personne
 {
@@ -34,10 +35,12 @@ public class Student extends Personne
 	 * mailAddress; private String address; private String numberPhone; private
 	 * String birthDate;
 	 */
-	@ManyToMany(mappedBy = "students")
+	@ManyToMany( fetch = FetchType.EAGER)
+	@JoinTable(name = "student_course",
+	joinColumns = {@JoinColumn(name = "student_id")},
+	inverseJoinColumns = {@JoinColumn(name = "course_id")})
+    private Set<Course> courses = new HashSet<>();
 	
-	List<Course> courses;
-
 	public Student()
 	{
 		super();

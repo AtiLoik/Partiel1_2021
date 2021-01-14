@@ -1,6 +1,8 @@
 package eu.ensup.partielspringbootweb.entities;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -26,9 +29,8 @@ public class Course
 	private String themeCourse;
 	private int numberHours;
 	
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-	@JoinColumn
-	List<Student> students;
+	@ManyToMany(mappedBy ="courses",fetch = FetchType.EAGER)    
+	private Set<Student> students =new  HashSet<Student>();
 
 
 	public Course()
